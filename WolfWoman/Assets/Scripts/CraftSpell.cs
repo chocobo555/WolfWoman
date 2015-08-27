@@ -7,12 +7,16 @@ public class CraftSpell : MonoBehaviour
 {
 
 	public ParseText myParseText;
-	public List<Button> allButtons;
+
+	//public List<Button> allButtons;
+		public Button SAVC;
+	List<Button> spellsToActivate;
 
 	List<string> myObtainedKeywords;
-	List<Button> spellsToActivate;
+
 	Rect myRect;
 	bool callActivate = false;
+
 
 
 	// Use this for initialization
@@ -29,16 +33,12 @@ public class CraftSpell : MonoBehaviour
 	{
 		foreach(string keyWord in myObtainedKeywords) 
 		{
-			if (keyWord == "Veridian") 
+			//veridian = SAVC
+			if (keyWord == "veridian") 
 			{
-				//spellsToActivate.Add(
+				spellsToActivate.Add(SAVC);
 			}
 		}
-
-
-
-
-
 
 		for (int i = 0; i < spellsToActivate.Count; i++) 
 		{
@@ -59,11 +59,16 @@ public class CraftSpell : MonoBehaviour
 	// Update is called once per frame
 	void Update() 
 	{
+
 		if(callActivate == false) 
 		{
 			ActivateSpell();
 			callActivate = true;
 		}
+
 	}
 
 }
+
+
+
