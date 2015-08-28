@@ -8,9 +8,11 @@ public class CraftSpell : MonoBehaviour
 
 	public ParseText myParseText;
 
-	//public List<Button> allButtons;
-		public Button SAVC;
+
+	public List<Button> allButtons;
+		//public Button SAVC;
 	List<Button> spellsToActivate;
+
 
 	List<string> myObtainedKeywords;
 
@@ -22,7 +24,7 @@ public class CraftSpell : MonoBehaviour
 	// Use this for initialization
 	void Start() 
 	{
-
+		spellsToActivate = new List<Button>();
 		myObtainedKeywords = myParseText.ObtainedKeyWords;
 		myRect = gameObject.GetComponent<RectTransform>().rect;
 
@@ -31,18 +33,30 @@ public class CraftSpell : MonoBehaviour
 
 	void ActivateSpell()
 	{
-		foreach(string keyWord in myObtainedKeywords) 
+
+		for (int i = 0; i < allButtons.Count; i++) 
 		{
-			//veridian = SAVC
-			if (keyWord == "veridian") 
+			string tempString = allButtons[i].transform.GetComponentInChildren<Text>().text;
+			string[] words;
+			words = tempString.Split(' ');
+
+			foreach(string keyWord in myObtainedKeywords) 
 			{
-				spellsToActivate.Add(SAVC);
+				//veridian = SAVC
+				for (int j = 0; j < words.Length; j++) 
+				{
+					if (keyWord == words[j]) 
+					{
+						spellsToActivate.Add(allButtons[i]);
+					}
+				}
 			}
 		}
+	
 
 		for (int i = 0; i < spellsToActivate.Count; i++) 
 		{
-			Vector3 buttonPosition = new Vector3(myRect.width / 2, myRect.height / 2, 0);
+			Vector3 buttonPosition = new Vector3(0, 0, 0);
 			Button mySpell = Instantiate(spellsToActivate[i], buttonPosition, Quaternion.Euler(0,0,0)) as Button;
 			mySpell.transform.SetParent(this.transform, false);
 		}
