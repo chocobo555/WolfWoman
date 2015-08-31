@@ -31,54 +31,45 @@ public class CraftSpell : MonoBehaviour
 	}
 
 
-	void ActivateSpell()
+	void ActivateAllSpells()
 	{
 
 		for (int i = 0; i < allButtons.Count; i++) 
 		{
-			string tempString = allButtons[i].transform.GetComponentInChildren<Text>().text;
-			string[] words;
-			words = tempString.Split(' ');
-
-			foreach(string keyWord in myObtainedKeywords) 
-			{
-				//veridian = SAVC
-				for (int j = 0; j < words.Length; j++) 
-				{
-					if (keyWord == words[j]) 
-					{
-						spellsToActivate.Add(allButtons[i]);
-					}
-				}
-			}
+			ActivateSpell(allButtons[i]);
 		}
-	
 
-		for (int i = 0; i < spellsToActivate.Count; i++) 
+		for (int j = 0; j < spellsToActivate.Count; j++) 
 		{
 			Vector3 buttonPosition = new Vector3(0, 0, 0);
-			Button mySpell = Instantiate(spellsToActivate[i], buttonPosition, Quaternion.Euler(0,0,0)) as Button;
+			Button mySpell = Instantiate(spellsToActivate[j], buttonPosition, Quaternion.Euler(0,0,0)) as Button;
 			mySpell.transform.SetParent(this.transform, false);
 		}
 
 	}
-
-
-	void LoadSpell()
+	void ActivateSpell(Button currButton)
 	{
-
+		string[] tempStringArray = GetButtonStrings(currButton);
+		
+		for(int j = 0; j < myObtainedKeywords.Count; j++)
+		{
+			for(int i = 0; i < tempStringArray.Length; i++)
+			{
+				if(tempStringArray[i] == myObtainedKeywords[j])
+					spellsToActivate.Add(currButton);  
+			} 
+		}
+	}
+	string[] GetButtonStrings(Button myButton)
+	{
+		string[] words = myButton.transform.GetComponentInChildren<Text>().text.Split(' ');
+		return words;
 	}
 
 
 	// Update is called once per frame
 	void Update() 
 	{
-
-		if(callActivate == false) 
-		{
-			ActivateSpell();
-			callActivate = true;
-		}
 
 	}
 

@@ -1,0 +1,39 @@
+-CraftSpell takes in the List myObtainedKeyWords.
+
+-It also contains the public List allButtons.
+
+          This script needs to look at the list of obtained keywords and then look at the 
+          list of all possible buttons. It has to be able to recognize what keywords match
+          which buttons. Then it will add the designated buttons to a new list of buttons 
+          called SpellsToActivate.
+          
+          
+          
+public List<Button> allButtons;
+List<Button> spellsToActivate;
+
+List<string> myObtainedKeywords;
+
+
+
+string[] GetButtonStrings(Button myButton)
+{
+    string[] words = myButton.transform.GetComponentInChildren<Text>().text.Split(' ');
+    return words;
+}
+
+void ActivateSpell(Button currButton)
+{
+    string[] tempStringArray = GetButtonStrings(currButton);
+    
+    for(int j = 0; j < myObtainedKeywords.count; j++)
+    {
+        for(int i = 0; i < tempStringArray.length; i++)
+        {
+            if(tempStringArray[i] == myObtainedKeywords[j])
+              spellsToActivate.Add(currButton);  
+        } 
+    }
+}
+
+
