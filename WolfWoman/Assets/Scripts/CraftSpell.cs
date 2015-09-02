@@ -8,11 +8,8 @@ public class CraftSpell : MonoBehaviour
 
 	public ParseText myParseText;
 
-
 	public List<Button> allButtons;
-		//public Button SAVC;
 	List<Button> spellsToActivate;
-
 
 	List<string> myObtainedKeywords;
 
@@ -34,12 +31,14 @@ public class CraftSpell : MonoBehaviour
 	void ActivateAllSpells()
 	{
 
-		for (int i = 0; i < allButtons.Count; i++) 
+		for(int i = 0; i < allButtons.Count; i++) 
 		{
 			ActivateSpell(allButtons[i]);
 		}
 
-		for (int j = 0; j < spellsToActivate.Count; j++) 
+		print (spellsToActivate.Count);//FOR SOME REASON SPELLSTOACTIVATE IS NOT BEING ADDED TO
+
+		for(int j = 0; j < spellsToActivate.Count; j++) 
 		{
 			Vector3 buttonPosition = new Vector3(0, 0, 0);
 			Button mySpell = Instantiate(spellsToActivate[j], buttonPosition, Quaternion.Euler(0,0,0)) as Button;
@@ -62,7 +61,9 @@ public class CraftSpell : MonoBehaviour
 	}
 	string[] GetButtonStrings(Button myButton)
 	{
-		string[] words = myButton.transform.GetComponentInChildren<Text>().text.Split(' ');
+		string[] words;
+		words = myButton.transform.GetChild(0).GetComponent<Text>().text.Split(' ');
+
 		return words;
 	}
 
@@ -70,6 +71,11 @@ public class CraftSpell : MonoBehaviour
 	// Update is called once per frame
 	void Update() 
 	{
+		if (callActivate == false) 
+		{
+			callActivate = true;
+			ActivateAllSpells();
+		}
 
 	}
 
